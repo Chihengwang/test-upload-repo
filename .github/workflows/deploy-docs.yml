@@ -78,11 +78,20 @@ jobs:
           # Create docs directory in target repo if it doesn't exist
           mkdir -p target-repo/docs
           
+          # Clean up target repo root directory - keep only README.md and docs folder
+          cd target-repo
+          # Remove all files and folders except README.md and docs
+          find . -maxdepth 1 ! -name '.' ! -name 'README.md' ! -name 'docs' ! -name '.git' -exec rm -rf {} +
+          
+          # Go back to root for rsync
+          cd "$GITHUB_WORKSPACE"
+          
           # Sync files to target repo's docs directory using rsync
           # --delete removes files in target that don't exist in source
           # -a preserves permissions and timestamps, -v shows progress
           rsync -av --delete "$SOURCE_DIR"/ target-repo/docs/
           
+          # Go back to target repo for git operations
           cd target-repo
           
           # Configure git
