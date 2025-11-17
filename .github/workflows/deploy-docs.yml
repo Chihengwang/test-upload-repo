@@ -90,6 +90,10 @@ jobs:
           # -a preserves permissions and timestamps, -v shows progress
           rsync -av --delete "$SOURCE_DIR"/ target-repo/docs/
           
+          # Create .nojekyll file to disable Jekyll processing on GitHub Pages
+          # This allows directories starting with _ (like _static, _sources) to be served
+          touch target-repo/docs/.nojekyll
+          
           # Change to target repo directory for git operations
           cd target-repo
           
