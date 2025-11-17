@@ -27,7 +27,16 @@ jobs:
 
       - name: Build documentation
         run: |
-          cd python-sdk/docs || cd docs || mkdir -p docs && cd docs
+          # Find or create docs directory
+          if [ -d "python-sdk/docs" ]; then
+            cd python-sdk/docs
+          elif [ -d "docs" ]; then
+            cd docs
+          else
+            mkdir -p docs
+            cd docs
+          fi
+          
           # Create a basic conf.py if it doesn't exist
           if [ ! -f conf.py ]; then
             cat > conf.py << 'EOF'
