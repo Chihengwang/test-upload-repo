@@ -75,8 +75,11 @@ jobs:
             exit 1
           fi
           
-          # Copy all files to target repo
-          cp -r "$SOURCE_DIR"/* target-repo/
+          # Create docs directory in target repo if it doesn't exist
+          mkdir -p target-repo/docs
+          
+          # Copy all files to target repo's docs directory
+          cp -r "$SOURCE_DIR"/* target-repo/docs/
           
           cd target-repo
           
