@@ -78,8 +78,10 @@ jobs:
           # Create docs directory in target repo if it doesn't exist
           mkdir -p target-repo/docs
           
-          # Copy all files to target repo's docs directory
-          cp -r "$SOURCE_DIR"/* target-repo/docs/
+          # Sync files to target repo's docs directory using rsync
+          # --delete removes files in target that don't exist in source
+          # -a preserves permissions and timestamps, -v shows progress
+          rsync -av --delete "$SOURCE_DIR"/ target-repo/docs/
           
           cd target-repo
           
